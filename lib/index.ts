@@ -15,14 +15,18 @@ const casilisk = <T extends Record<string, any> = Object, O = any>(
 ): O => {
   if (!(object instanceof Object)) {
     return object;
-  } else {
-    const finalObject = Object.keys(object).map((key) => {
-      const value = object[key];
-      return [convertor(key), casilisk(value)];
-    });
-
-    return Object.fromEntries(finalObject);
   }
+
+  if (object instanceof Array) {
+    return object.map((item) => casilisk(item)) as O;
+  }
+
+  const finalObject = Object.keys(object).map((key) => {
+    const value = object[key];
+    return [convertor(key), casilisk(value)];
+  });
+
+  return Object.fromEntries(finalObject);
 };
 
 export default casilisk;
