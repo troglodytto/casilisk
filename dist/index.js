@@ -14,12 +14,13 @@ const casilisk = (object, convertor = exports.CONVERTERS.CAMEL) => {
     if (!(object instanceof Object)) {
         return object;
     }
-    else {
-        const finalObject = Object.keys(object).map((key) => {
-            const value = object[key];
-            return [convertor(key), casilisk(value)];
-        });
-        return Object.fromEntries(finalObject);
+    if (object instanceof Array) {
+        return object.map((item) => casilisk(item));
     }
+    const finalObject = Object.keys(object).map((key) => {
+        const value = object[key];
+        return [convertor(key), casilisk(value)];
+    });
+    return Object.fromEntries(finalObject);
 };
 exports.default = casilisk;
