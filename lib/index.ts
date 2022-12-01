@@ -11,14 +11,18 @@ export const CONVERTERS = {
 
 const casilisk = <T extends Record<string, any> = Object, O = any>(
   object: T,
-  convertor = CONVERTERS.SNAKE
+  convertor = CONVERTERS.CAMEL
 ): O => {
-  const finalObject = Object.keys(object).map((key) => {
-    const value = object[key];
-    return [convertor(key), value];
-  });
+  if (!(object instanceof Object)) {
+    return object;
+  } else {
+    const finalObject = Object.keys(object).map((key) => {
+      const value = object[key];
+      return [convertor(key), casilisk(value)];
+    });
 
-  return Object.fromEntries(finalObject);
+    return Object.fromEntries(finalObject);
+  }
 };
 
 export default casilisk;

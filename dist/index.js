@@ -10,11 +10,16 @@ exports.CONVERTERS = {
     PASCAL: R.compose((text) => text.replace(/ /g, ""), _.startCase, _.camelCase),
     MACRO: R.compose(R.toUpper, _.snakeCase),
 };
-const casilisk = (object, convertor = exports.CONVERTERS.SNAKE) => {
-    const finalObject = Object.keys(object).map((key) => {
-        const value = object[key];
-        return [convertor(key), value];
-    });
-    return Object.fromEntries(finalObject);
+const casilisk = (object, convertor = exports.CONVERTERS.CAMEL) => {
+    if (!(object instanceof Object)) {
+        return object;
+    }
+    else {
+        const finalObject = Object.keys(object).map((key) => {
+            const value = object[key];
+            return [convertor(key), casilisk(value)];
+        });
+        return Object.fromEntries(finalObject);
+    }
 };
 exports.default = casilisk;
