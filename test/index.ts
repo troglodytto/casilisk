@@ -1,3 +1,4 @@
+import { CONVERTERS } from "../dist";
 import casilisk from "../lib";
 
 const obj = {
@@ -59,4 +60,4 @@ const obj = {
   ],
 };
 
-console.log(JSON.stringify(casilisk(obj), null, 2));
+const converted = casilisk(obj, CONVERTERS.SNAKE);

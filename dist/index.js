@@ -15,11 +15,11 @@ const casilisk = (object, convertor = exports.CONVERTERS.CAMEL) => {
         return object;
     }
     if (object instanceof Array) {
-        return object.map((item) => casilisk(item));
+        return object.map((item) => casilisk(item, convertor));
     }
     const finalObject = Object.keys(object).map((key) => {
         const value = object[key];
-        return [convertor(key), casilisk(value)];
+        return [convertor(key), casilisk(value, convertor)];
     });
     return Object.fromEntries(finalObject);
 };

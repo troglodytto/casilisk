@@ -18,12 +18,12 @@ const casilisk = <T extends Record<string, any> = Object, O = any>(
   }
 
   if (object instanceof Array) {
-    return object.map((item) => casilisk(item)) as O;
+    return object.map((item) => casilisk(item, convertor)) as O;
   }
 
   const finalObject = Object.keys(object).map((key) => {
     const value = object[key];
-    return [convertor(key), casilisk(value)];
+    return [convertor(key), casilisk(value, convertor)];
   });
 
   return Object.fromEntries(finalObject);
